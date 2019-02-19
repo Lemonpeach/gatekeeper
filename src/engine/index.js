@@ -1,2 +1,2 @@
 export { createAuthHook } from './create-auth-hook';
-export { isAuthorized } from './is-authorized';
+export { isAuthorized, filterResponse } from './is-authorized';
