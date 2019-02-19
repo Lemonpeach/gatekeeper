@@ -7,8 +7,9 @@
     "lint": "eslint src",
     "jest": "jest src",
     "test": "npm run lint && npm run jest",
-    "babel": "babel src -d build",
-    "build": "npm run clean && npm run babel"
+    "babel": "babel src -d build --ignore node_modules,src/test,src/**/*.test.js",
+    "build": "npm run clean && npm run babel",
+    "prepublishOnly": "npm run build"
   },
   "main": "build/index.js",
   "files": [
