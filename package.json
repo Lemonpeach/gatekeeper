@@ -5,10 +5,19 @@
   "scripts": {
     "clean": "shx rm -rf build",
     "lint": "eslint src",
-    "test": "npm run lint",
+    "jest": "jest src",
+    "test": "npm run lint && npm run jest",
     "babel": "babel src -d build",
     "build": "npm run clean && npm run babel"
   },
+  "main": "build/index.js",
+  "files": [
+    "build",
+    "AUTHORS",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lemonpeach/gatekeeper.git"
@@ -21,7 +30,10 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
+    "@feathersjs/errors": "^3.3.6",
+    "@feathersjs/feathers": "^3.3.1",
     "babel-plugin-module-resolver": "^3.2.0",
     "eslint": "^5.13.0",
     "eslint-config-standard": "^12.0.0",
@@ -29,6 +41,11 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
+    "jest": "^24.1.0",
     "shx": "^0.3.2"
+  },
+  "dependencies": {
+    "dot-prop-immutable": "^1.5.0",
+    "lodash": "^4.17.11"
   }
 }
