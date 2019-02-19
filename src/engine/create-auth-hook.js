@@ -49,7 +49,7 @@ export const createAuthHook = ({
     return Promise.resolve(context);
   }
 
-  const args = getArguments(context);
+  const args = await getArguments(context);
 
   const publicAttributes = find(
     rules,
