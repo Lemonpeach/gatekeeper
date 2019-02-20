@@ -94,7 +94,7 @@ const checkEntitlements = ({
   return includes(authorizedByRole, true) || includes(authorizedByAttribute, true);
 };
 
-export const getAuthorization = async ({
+const getAuthorization = async ({
   rules,
   data = [],
   toData = [],
