@@ -1,4 +1,3 @@
-// import { merge, map } from 'lodash';
 import { FORBIDDEN_ERROR } from 'utils';
 
 describe('create-auth-hook test', () => {
