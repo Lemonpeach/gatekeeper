@@ -1,4 +1,4 @@
-describe('hooks/create', () => {
+describe('hooks/patch', () => {
   beforeEach(() => {
     jest.mock('engine', () => ({
       createAuthHook: jest.fn()
@@ -9,7 +9,7 @@ describe('hooks/create', () => {
     jest.resetModules();
   });
 
-  test('should delegate to patch auth hooks', async () => {
+  test('should delegate to patch auth hooks', () => {
     const { patch } = require('../patch');
     const options = {
       authenticate: () => {},

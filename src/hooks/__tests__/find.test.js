@@ -9,7 +9,7 @@ describe('hooks/find', () => {
     jest.resetModules();
   });
 
-  test('should delegate to find auth hooks', async () => {
+  test('should delegate to find auth hooks', () => {
     const { find } = require('../find');
     const options = {
       authenticate: () => {},
