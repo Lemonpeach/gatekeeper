@@ -37,7 +37,7 @@ describe('hooks/create', () => {
     const { createAuthHook } = require('engine');
 
     const options = { onAuthorized: await jest.fn() };
-    const context = { 'authorized': true, context: 'resolved' };
+    const context = { authorized: true, context: 'resolved' };
 
     create(options);
 
@@ -51,7 +51,7 @@ describe('hooks/create', () => {
     const { FORBIDDEN_ERROR } = require('utils');
 
     const options = { onAuthorized: await jest.fn() };
-    const context = { 'authorized': false, context: 'resolved' };
+    const context = { authorized: false, context: 'resolved' };
 
     create(options);
 
