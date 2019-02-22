@@ -9,7 +9,7 @@ describe('hooks/create', () => {
     jest.resetModules();
   });
 
-  test('should delegate to create auth hooks', async () => {
+  test('should delegate to create auth hooks', () => {
     const { create } = require('../create');
     const options = {
       authenticate: () => {},
