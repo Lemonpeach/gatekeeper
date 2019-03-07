@@ -12,14 +12,22 @@ const castBoolean = value => {
 const lookupEntitlements = ({
   principalId, rule, data, app
 }) => {
-  const queryItems = chain(data)
-    .map(item => item[rule.resourceIdName])
-    .uniq()
-    .map(id => ({
-      [rule['authorization-role'].resourceIdName]: id,
+  let queryItems = [];
+
+  if (isNil(rule.resourceIdName)) {
+    queryItems = [{
       [rule['authorization-role'].principalIdName]: principalId
-    }))
-    .value();
+    }];
+  } else {
+    queryItems = chain(data)
+      .map(item => item[rule.resourceIdName])
+      .uniq()
+      .map(id => ({
+        [rule['authorization-role'].resourceIdName]: id,
+        [rule['authorization-role'].principalIdName]: principalId
+      }))
+      .value();
+  }
 
   return app.service(rule['authorization-role'].serviceName).find({
     query: {
@@ -30,13 +38,17 @@ const lookupEntitlements = ({
 
 const checkRoleEntitlement = ({
   principalId, item, rule, entitlements
-}) => !!find(
-  entitlements,
-  {
-    [rule['authorization-role'].resourceIdName]: item[rule.resourceIdName],
+}) => {
+  const query = {
     [rule['authorization-role'].principalIdName]: principalId
+  };
+
+  if (!isNil(rule.resourceIdName)) {
+    query[rule['authorization-role'].resourceIdName] = item[rule.resourceIdName];
   }
-);
+
+  return !!find(entitlements, query);
+};
 
 const checkAttributeEntitlement = ({
   item,
