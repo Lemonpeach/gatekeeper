@@ -33,19 +33,22 @@ describe('hooks/find', () => {
     });
   });
 
-  test('should skip when authorized', () => {
+  test('should return context when authorized', async () => {
     const { find } = require('../find');
     const { createAuthHook } = require('engine');
-    const { SKIP } = require('@feathersjs/feathers');
     const options = {
       authorized: true,
-      context: {}
+      context: {
+        data: 'one'
+      }
     };
 
     find({});
 
     const { onAuthorized } = createAuthHook.mock.calls[0][0];
-    expect(onAuthorized(options)).toBe(SKIP);
+    const context = await onAuthorized(options);
+
+    expect(context).toEqual({ data: 'one', result: true });
     expect(options.context.result).toBe(true);
   });
 });
