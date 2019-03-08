@@ -32,13 +32,14 @@ describe('hooks/get', () => {
     });
   });
 
-  test('should skip when authorized', () => {
+  test('should return context when authorized', async () => {
     const { get } = require('../get');
     const { createAuthHook } = require('engine');
-    const { SKIP } = require('@feathersjs/feathers');
     const options = {
       authorized: true,
-      context: {},
+      context: {
+        data: 'one'
+      },
       args: {
         data: 'hello'
       }
@@ -47,7 +48,9 @@ describe('hooks/get', () => {
     get({});
 
     const { onAuthorized } = createAuthHook.mock.calls[0][0];
-    expect(onAuthorized(options)).toBe(SKIP);
+    const context = await onAuthorized(options);
+
+    expect(context).toEqual({ data: 'one', result: 'hello' });
     expect(options.context.result).toBe('hello');
   });
 
