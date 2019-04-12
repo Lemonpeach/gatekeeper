@@ -29,11 +29,13 @@ const lookupEntitlements = ({
       .value();
   }
 
-  return app.service(rule['authorization-role'].serviceName).find({
-    query: {
-      $or: queryItems
-    }
-  });
+  if (app.service(rule['authorization-role'].serviceName)) {
+    return app.service(rule['authorization-role'].serviceName).find({
+      query: {
+        $or: queryItems
+      }
+    });
+  }
 };
 
 const checkRoleEntitlement = ({
