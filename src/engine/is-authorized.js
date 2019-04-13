@@ -1,5 +1,5 @@
 import {
-  chain, map, includes, find, castArray, filter, isNil, concat, defaultTo
+  chain, map, includes, find, castArray, filter, isNil, concat, defaultTo, reduce
 } from 'lodash';
 import dotprop from 'dot-prop-immutable';
 
@@ -36,6 +36,19 @@ const lookupEntitlements = ({
       }
     });
   }
+};
+
+const checkFieldsEntitlement = ({
+  item, rule
+}) => {
+  if (rule.fields.includes('*')) {
+    return true;
+  }
+  return reduce(
+    item,
+    (result, value, key) => result && rule.fields.includes(key),
+    true
+  );
 };
 
 const checkRoleEntitlement = ({
@@ -95,6 +108,8 @@ const checkEntitlements = ({
     roleRules,
     (rule, index) => checkRoleEntitlement({
       principalId, item, rule, entitlements: entitlements[index]
+    }) && checkFieldsEntitlement({
+      item, rule
     })
   );
 
@@ -102,6 +117,8 @@ const checkEntitlements = ({
     attributeRules,
     rule => checkAttributeEntitlement({
       item, rule, attributeLookup, context
+    }) && checkFieldsEntitlement({
+      item, rule
     })
   );
 
